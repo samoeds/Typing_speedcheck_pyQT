@@ -58,16 +58,19 @@ class Ui(QtWidgets.QMainWindow):
 
     def restart(self):
         self.text_entry.clear()
+        self.your_wpm.setText(str("0"))
         self.time_left = 60
 
 
     def start_button_activated(self):
+        self.text_entry.clear()
         self.start_timer()
 
 
     def your_best(self):
         text = []
         text = self.text_entry.toPlainText().split()
+        self.your_wpm.setText(str(len(text)))
         print(len(text))
 
     def wpm(self):

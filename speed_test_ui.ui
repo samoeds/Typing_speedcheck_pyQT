@@ -198,7 +198,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
    <property name="geometry">
     <rect>
      <x>140</x>
-     <y>380</y>
+     <y>370</y>
      <width>311</width>
      <height>81</height>
     </rect>
@@ -220,7 +220,7 @@ What should I do if my hands begin to hurt?
    <property name="geometry">
     <rect>
      <x>140</x>
-     <y>70</y>
+     <y>60</y>
      <width>311</width>
      <height>81</height>
     </rect>
