@@ -80,19 +80,23 @@ class Ui(QtWidgets.QMainWindow):
 
         words = self.text_entry.toPlainText().lower().split()
         chars = len(self.text_entry.toPlainText())
+        score = 0
 
-        for word in words:
-            if word == word in src_words:
+        for word in src_words:
+            if word in words:
                 print("Yes")
+                score += 1
 
-                self.your_wpm.setText(str(len(words)))
-                print(f"wpm: {len(words)}")
+                self.your_wpm.setText(str(score))
+                print(f"wpm: {score}")
+
+                self.your_cpm.setText(str(chars))
+                print(f"Chars: {chars}")
 
             else:
                 print("no")
 
-        self.your_cpm.setText(str(chars))
-        print(f"Chars: {chars}")
+
 
 def main():
     app = QtWidgets.QApplication(sys.argv)
