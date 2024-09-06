@@ -1,6 +1,7 @@
 import sys
 
 from PyQt6 import QtWidgets, uic
+from PyQt6.QtGui import QTextCursor
 from PyQt6.QtCore import QTimer
 
 
@@ -10,9 +11,9 @@ class Ui(QtWidgets.QMainWindow):
         super(Ui, self).__init__()
         uic.loadUi("speed_test_ui.ui", self)
 
+        # TIMER
         self.time_label = self.findChild(QtWidgets.QLabel, 'time_label')
-
-        self.time_left = 61
+        self.time_left = 60
         self.timer = QTimer(self)
         self.timer.timeout.connect(self.update_timer)
 
@@ -31,23 +32,29 @@ class Ui(QtWidgets.QMainWindow):
         self.wpm_score = 0
         self.your_wpm.setText(str(self.wpm_score))
 
-        # RESTART
-        self.restart_label = self.findChild(QtWidgets.QPushButton, "restart_button")
-        self.restart_label.clicked.connect(self.restart)
-
         # START
         self.start_label = self.findChild(QtWidgets.QPushButton, "start_button")
         self.start_label.clicked.connect(self.start_button_activated)
 
         # TEXT_ENTRY
         self.text_entry = self.findChild(QtWidgets.QTextEdit, "text_entry")
-        self.text_entry.textChanged.connect(self.your_best)
+        self.text_entry.textChanged.connect(self.scores)
+
+        # TEXT_BROWSER
+        # self.text_browser = (self.findChild(QtWidgets.QTextBrowser, "textBrowser")
+        #                      .toMarkdown().replace(".", "").split())
+        self.text_browser = self.findChild(QtWidgets.QTextBrowser, "textBrowser").toMarkdown().lower()
 
 
+
+    def set_cursor_position(self):
+        cursor = self.text_entry.textCursor()
+        cursor.setPosition(0)
+        self.text_entry.setTextCursor(cursor)
+        self.text_entry.setFocus()
 
     def start_timer(self):
         self.timer.start(1000)
-
 
     def update_timer(self):
         if self.time_left > 0:
@@ -56,36 +63,41 @@ class Ui(QtWidgets.QMainWindow):
         else:
             self.timer.stop()
 
-    def restart(self):
-        self.text_entry.clear()
-        self.your_wpm.setText(str("0"))
-        self.time_left = 60
-
-
     def start_button_activated(self):
         self.text_entry.clear()
+        self.time_left = 61
         self.start_timer()
+        QtWidgets.QApplication.processEvents()
+        self.set_cursor_position()
+        self.start_label.setText("Restart")
 
+    def scores(self):
 
-    def your_best(self):
-        text = []
-        text = self.text_entry.toPlainText().split()
-        self.your_wpm.setText(str(len(text)))
-        print(len(text))
+        # Source chars count
+        src_chars = len(self.text_browser)
+        # Source words in a list
+        src_words = self.text_browser.replace(".", "").replace(",", "").split()
 
-    def wpm(self):
-        pass
+        words = self.text_entry.toPlainText().lower().split()
+        chars = len(self.text_entry.toPlainText())
 
-    def cpm(self):
-        pass
+        for word in words:
+            if word == word in src_words:
+                print("Yes")
 
+                self.your_wpm.setText(str(len(words)))
+                print(f"wpm: {len(words)}")
 
+            else:
+                print("no")
 
+        self.your_cpm.setText(str(chars))
+        print(f"Chars: {chars}")
 
 def main():
     app = QtWidgets.QApplication(sys.argv)
     window = Ui()
-    window.setWindowTitle("Typing speed test")
+    window.setWindowTitle("Typing Speed Test")
     window.setFixedSize(600, 483)
     window.show()
 

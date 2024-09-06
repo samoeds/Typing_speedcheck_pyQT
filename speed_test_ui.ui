@@ -24,7 +24,7 @@
    </property>
    <property name="font">
     <font>
-     <pointsize>20</pointsize>
+     <pointsize>16</pointsize>
     </font>
    </property>
    <property name="layoutDirection">
@@ -203,6 +203,11 @@ li.checked::marker { content: &quot;\2612&quot;; }
      <height>81</height>
     </rect>
    </property>
+   <property name="font">
+    <font>
+     <pointsize>8</pointsize>
+    </font>
+   </property>
    <property name="layoutDirection">
     <enum>Qt::LeftToRight</enum>
    </property>
@@ -237,19 +242,6 @@ What should I do if my hands begin to hurt?
    </property>
    <property name="alignment">
     <set>Qt::AlignCenter</set>
-   </property>
-  </widget>
-  <widget class="QPushButton" name="restart_button">
-   <property name="geometry">
-    <rect>
-     <x>490</x>
-     <y>10</y>
-     <width>75</width>
-     <height>21</height>
-    </rect>
-   </property>
-   <property name="text">
-    <string>Restart</string>
    </property>
   </widget>
   <widget class="QPushButton" name="start_button">
